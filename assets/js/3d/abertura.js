@@ -197,13 +197,28 @@ export function iniciar(secao, slides, opcoes = {}) {
     if (!raf && pronta) { ultimo = performance.now(); raf = requestAnimationFrame(passo); }
   }
 
+  // a troca só começa quando o próximo vídeo já mostrou um quadro; se a rede demorar, a cena entra como foto (nunca preta)
+  function pronto(i, f) {
+    if (!f.video) return Promise.resolve(f);
+    const v = f.video;
+    v.currentTime = 0;
+    tocar(f);
+    return new Promise((ok) => {
+      let feito = false;
+      const vai = (r) => { if (!feito) { feito = true; ok(r); } };
+      const quadro = () => { f.tex.needsUpdate = true; vai(f); };
+      if ('requestVideoFrameCallback' in v) v.requestVideoFrameCallback(quadro);
+      else v.addEventListener('playing', quadro, { once: true });
+      setTimeout(() => { if (!feito) { parar(f); foto(i).then(vai).catch(() => vai(f)); } }, 3500);
+    });
+  }
+
   function comecaTroca(i) {
     esperando = true;
-    fonte(i).then((f) => {
+    fonte(i).then((f) => pronto(i, f)).then((f) => {
       esperando = false;
       proxima = i;
       fB = f;
-      if (f.video) f.video.currentTime = 0;
       poe('B', i, f);
       tocar(f);
       emTroca = true;
