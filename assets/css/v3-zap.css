@@ -138,6 +138,38 @@
 @keyframes u-wa-pulso { 0% { opacity: .95; transform: scale(.98); } 70% { opacity: 0; transform: scale(1.04); } 100% { opacity: 0; } }
 @keyframes u-flutua { from { translate: 0 0; } to { translate: 0 -12px; } }
 
+/* ---------- o gostinho da Unitec News: prazos, duas pautas e o convite em evidência ---------- */
+.u-vitrine__mais {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 40px clamp(32px, 5vw, 88px); margin-top: clamp(56px, 7vw, 112px);
+  padding-top: clamp(32px, 4vw, 48px); border-top: 1px solid rgba(255, 255, 255, .18);
+}
+.u-vitrine__mais h3 { margin-bottom: 8px; font-size: 1.125rem; font-weight: 800; color: #fff; }
+.u-vprazos li { display: grid; grid-template-columns: 56px minmax(0, 1fr); column-gap: 16px; padding: 16px 0; border-bottom: 1px solid rgba(255, 255, 255, .14); }
+.u-vprazos__dia { grid-column: 1; grid-row: 1; font-size: 2.5rem; font-weight: 300; line-height: .9; letter-spacing: -.03em; color: #fff; }
+.u-vprazos__mes { grid-column: 1; grid-row: 2; margin-top: 4px; font-size: .8125rem; font-weight: 800; color: rgba(255, 255, 255, .7); }
+.u-vprazos__txt { grid-column: 2; grid-row: 1 / span 2; font-size: .9375rem; line-height: 1.45; color: rgba(255, 255, 255, .72); }
+.u-vprazos__txt b { display: block; margin-bottom: 2px; font-size: 1.0625rem; font-weight: 800; color: #fff; }
+.u-vprazos .u-link { margin-top: 12px; }
+.u-vpautas { display: grid; gap: 14px; align-content: start; }
+.u-vpauta {
+  display: grid; gap: 8px; padding: 22px 24px; border: 1px solid rgba(255, 255, 255, .18); border-radius: 3px; color: #fff; text-decoration: none;
+  background: rgba(255, 255, 255, .03); transition: background-color .3s var(--ease), border-color .3s var(--ease), transform .4s var(--ease);
+}
+.u-vpauta:hover { background: rgba(255, 255, 255, .07); border-color: rgba(255, 255, 255, .4); }
+@media (hover: hover) and (pointer: fine) { .u-vpauta:hover { transform: translateY(-3px); } }
+.u-vpauta__meta { display: flex; gap: 12px; font-size: .8125rem; font-weight: 600; color: rgba(255, 255, 255, .7); }
+.u-vpauta__meta b { font-weight: 800; color: #fff; }
+.u-vpauta__titulo { font-size: clamp(1.1875rem, 1.05rem + .5vw, 1.5rem); font-weight: 800; line-height: 1.22; letter-spacing: -.01em; text-wrap: balance; }
+.u-vpauta__ler { display: inline-flex; align-items: center; gap: 8px; font-size: .9375rem; font-weight: 800; color: #fff; text-decoration: underline; text-decoration-color: var(--vermelho); text-decoration-thickness: 2px; text-underline-offset: .32em; }
+.u-vitrine__chamada {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px 40px; margin-top: clamp(40px, 5vw, 64px);
+  padding: clamp(28px, 3.4vw, 44px) clamp(24px, 3.4vw, 48px); border-radius: 3px; background: rgba(255, 255, 255, .06);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), inset 0 3px 0 var(--vermelho);
+}
+.u-vitrine__chamada p { max-width: 28ch; font-size: clamp(1.5rem, 1.15rem + 1.4vw, 2.25rem); font-weight: 300; line-height: 1.12; letter-spacing: -.02em; color: #fff; }
+.u-vitrine__chamada p b { font-weight: 800; }
+.u-vitrine__chamada-acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 26px; }
+
 /* ---------- celular de verdade ---------- */
 @media (max-width: 999px) {
   /* no celular, o aparelho vem logo depois do título: é ali que a pessoa se vê recebendo a mensagem */
@@ -149,6 +181,10 @@
   .u-vitrine__itens { order: 4; margin-top: 8px; }
   .u-vitrine__acoes { order: 5; }
   .u-vitrine__nota { order: 6; }
+  .u-vitrine__mais { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 760px) {
+  .u-vitrine__chamada-acoes, .u-vitrine__chamada-acoes .btn { width: 100%; }
 }
 @media (max-width: 760px) {
   .u-vitrine__palco { min-height: 600px; perspective: 1200px; }

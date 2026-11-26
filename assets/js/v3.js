@@ -222,6 +222,58 @@
     }
   }
 
+  /* ---------------- O tempo: a tela fica e a rolagem troca os três atos ---------------- */
+  const tempo = $('[data-travessia]');
+  if (tempo && !reduz) {
+    tempo.classList.add('vivo');
+    const cenas = $$('[data-cena-t]', tempo);
+    const vozes = $$('[data-voz]', tempo);
+    const pares = $$('[data-par]', tempo);
+    const virada = cenas[cenas.length - 1];
+    const faixas = [[0, 0.27], [0.27, 0.6], [0.6, 1.01]];
+    let pedidoT = false;
+    function quadroTempo() {
+      pedidoT = false;
+      const r = tempo.getBoundingClientRect();
+      const total = Math.max(1, r.height - innerHeight);
+      const p = Math.min(1, Math.max(0, -r.top / total));
+      tempo.style.setProperty('--p', p.toFixed(4));
+      cenas.forEach((c, i) => {
+        const [a, b] = faixas[i] || [0, 1];
+        c.classList.toggle('ativa', p >= a && p < b);
+        c.classList.toggle('passou', p >= b);
+      });
+      const lv = (p - faixas[1][0]) / (faixas[1][1] - faixas[1][0]);
+      const iv = Math.min(vozes.length - 1, Math.max(0, Math.floor(lv * vozes.length)));
+      vozes.forEach((v, k) => v.classList.toggle('ativa', k === iv));
+      const lc = (p - faixas[2][0]) / (1 - faixas[2][0]);
+      pares.forEach((q, k) => q.classList.toggle('ativo', lc > 0.06 + k * 0.15));
+      if (virada) virada.classList.toggle('fim', lc > 0.58);
+    }
+    addEventListener('scroll', () => { if (!pedidoT) { pedidoT = true; requestAnimationFrame(quadroTempo); } }, { passive: true });
+    addEventListener('resize', quadroTempo);
+    quadroTempo();
+  }
+
+  /* ---------------- Números que contam ao aparecer (o valor final já está no HTML) ---------------- */
+  const contadores = $$('[data-conta]');
+  if (contadores.length && !reduz && 'IntersectionObserver' in window) {
+    const fmt = (v) => Math.round(v).toLocaleString('pt-BR');
+    const io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (!e.isIntersecting) return;
+      io.unobserve(e.target);
+      const el = e.target, fim = Number(el.dataset.conta), dur = fim > 99 ? 2200 : 1500, ini = performance.now();
+      const anda = (agora) => {
+        const t = Math.min(1, (agora - ini) / dur);
+        el.textContent = fmt(fim * (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)));
+        if (t < 1) requestAnimationFrame(anda);
+      };
+      el.textContent = '0';
+      requestAnimationFrame(anda);
+    }), { threshold: 0.6 });
+    contadores.forEach((c) => io.observe(c));
+  }
+
   /* ---------------- Unitec News no WhatsApp: as mensagens chegam uma a uma ---------------- */
   $$('[data-vitrine]').forEach((vitrine) => {
     const msgs = $$('[data-wa-msg]', vitrine);

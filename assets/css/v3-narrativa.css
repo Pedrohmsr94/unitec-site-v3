@@ -1,0 +1,127 @@
+/* Unitec, site v3: a narrativa da home (25/11/2026, segunda rodada).
+   - O tempo: uma tela que fica enquanto a rolagem conta três atos do deck de posicionamento (o mercado, as tensões,
+     a virada), com a linha do tempo da Unitec ao lado do produtor.
+   - As passagens entre seções: a cor de cima se desfaz em meio-tom (os círculos da marca) até virar a de baixo.
+   - A seção que sai recua e esmaece; a que entra cresce e acende. Com "reduzir movimento", nada se mexe. */
+
+/* =====================================================================================
+   O tempo
+   ===================================================================================== */
+.u-tempo { position: relative; background: var(--papel); color: var(--grafite); }
+.u-tempo__cena { padding: clamp(64px, 8vw, 128px) 0 0; }
+.u-tempo__cena:last-child { padding-bottom: clamp(56px, 6vw, 96px); }
+.u-tempo__frase { max-width: 15ch; font-size: clamp(2.5rem, 1.35rem + 4.3vw, 5.5rem); font-weight: 300; line-height: 1.0; letter-spacing: -.036em; color: var(--marinho); text-wrap: balance; }
+.u-tempo__frase b { font-weight: 800; }
+.u-tempo__frase--menor { max-width: 20ch; font-size: clamp(2rem, 1.3rem + 2.7vw, 3.75rem); line-height: 1.05; }
+.u-tempo__dados { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px clamp(24px, 3vw, 56px); margin-top: clamp(40px, 5vw, 72px); }
+.u-tempo__dados div { display: flex; flex-direction: column; gap: 10px; padding-top: 18px; border-top: 2px solid var(--marinho); }
+.u-tempo__dados dd { order: 1; font-size: clamp(2.75rem, 1.7rem + 3.2vw, 5.25rem); font-weight: 800; line-height: .95; letter-spacing: -.045em; color: var(--marinho); white-space: nowrap; }
+.u-tempo__dados dt { order: 2; max-width: 26ch; font-size: 1.0625rem; line-height: 1.45; color: var(--grafite); }
+.u-tempo__fonte { margin-top: 22px; font-size: .875rem; color: var(--grafite-2); }
+.u-tempo__vozes { display: grid; gap: 20px; margin-top: 36px; }
+.u-tempo__vozes li { max-width: 22ch; font-size: clamp(1.875rem, 1.2rem + 2.6vw, 3.5rem); font-weight: 300; line-height: 1.1; letter-spacing: -.025em; color: var(--marinho); text-wrap: balance; }
+.u-tempo__pares { display: grid; gap: 16px; margin-top: 40px; }
+.u-tempo__pares li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 26px; font-size: clamp(1.25rem, 1rem + 1.1vw, 2rem); line-height: 1.2; }
+.u-tempo__pares s { position: relative; color: var(--grafite-2); font-weight: 400; text-decoration: line-through; text-decoration-color: var(--vermelho); text-decoration-thickness: 2px; }
+.u-tempo__pares b { font-weight: 800; color: var(--marinho); }
+.u-tempo__ideia { margin: 44px 0 18px; font-size: clamp(2.125rem, 1.35rem + 3vw, 4.25rem); font-weight: 300; line-height: 1.02; letter-spacing: -.035em; color: var(--marinho); }
+.u-tempo__ideia b { font-weight: 800; }
+
+.u-tempo__eixo { padding-top: 48px; padding-bottom: 40px; }
+.u-tempo__linha {
+  position: relative; height: 2px;
+  background: linear-gradient(90deg, var(--vermelho) calc(var(--p, 1) * 100%), var(--fio-papel) 0);
+}
+.u-tempo__ponto {
+  position: absolute; top: 50%; left: calc(var(--p, 1) * 100%); width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%;
+  background: var(--vermelho); box-shadow: 0 0 0 7px rgba(212, 29, 34, .16);
+}
+.u-tempo__marcos { position: relative; height: 54px; margin-top: 16px; font-size: .875rem; line-height: 1.35; color: var(--grafite-2); }
+.u-tempo__marcos li { position: absolute; top: 0; width: max-content; max-width: 22ch; }
+.u-tempo__marcos li:nth-child(1) { left: 0; }
+.u-tempo__marcos li:nth-child(2) { left: 33.33%; transform: translateX(-50%); text-align: center; }
+.u-tempo__marcos li:nth-child(3) { left: 66.66%; transform: translateX(-50%); text-align: center; }
+.u-tempo__marcos li:nth-child(4) { right: 0; text-align: right; }
+.u-tempo__marcos b { display: block; font-size: 1.125rem; font-weight: 800; color: var(--marinho); }
+
+/* com movimento: a tela fica e os atos se trocam com opacidade, escala e foco */
+@media (prefers-reduced-motion: no-preference) {
+  .u-tempo.vivo { height: 340vh; }
+  .u-tempo.vivo .u-tempo__palco { position: sticky; top: 0; display: flex; flex-direction: column; height: 100svh; padding-top: var(--faixa-h); overflow: hidden; }
+  .u-tempo.vivo .u-tempo__cenas { position: relative; display: grid; flex: 1; align-items: center; }
+  .u-tempo.vivo .u-tempo__cena {
+    grid-area: 1 / 1; padding: 0; opacity: 0; transform: translateY(48px) scale(.96); filter: blur(12px); pointer-events: none;
+    transition: opacity .85s var(--ease), transform 1.1s var(--ease), filter .85s var(--ease);
+  }
+  .u-tempo.vivo .u-tempo__cena.ativa { opacity: 1; transform: none; filter: none; pointer-events: auto; }
+  .u-tempo.vivo .u-tempo__cena.passou { transform: translateY(-56px) scale(1.05); }
+  .u-tempo.vivo .u-tempo__vozes { display: grid; margin-top: 40px; }
+  .u-tempo.vivo .u-tempo__vozes li {
+    grid-area: 1 / 1; font-size: clamp(2.25rem, 1.3rem + 3.6vw, 4.75rem); opacity: 0; transform: translateY(30px) scale(.97); filter: blur(8px);
+    transition: opacity .7s var(--ease), transform .9s var(--ease), filter .7s var(--ease);
+  }
+  .u-tempo.vivo .u-tempo__vozes li.ativa { opacity: 1; transform: none; filter: none; }
+  .u-tempo.vivo [data-par] { opacity: .18; transition: opacity .6s var(--ease); }
+  .u-tempo.vivo [data-par] s { text-decoration-color: transparent; transition: text-decoration-color .5s var(--ease) .15s, color .5s var(--ease) .15s; }
+  .u-tempo.vivo [data-par] b { opacity: 0; transform: translateX(-14px); display: inline-block; transition: opacity .6s var(--ease) .35s, transform .7s var(--ease) .35s; }
+  .u-tempo.vivo [data-par].ativo { opacity: 1; }
+  .u-tempo.vivo [data-par].ativo s { text-decoration-color: var(--vermelho); color: var(--grafite-2); }
+  .u-tempo.vivo [data-par].ativo b { opacity: 1; transform: none; }
+  .u-tempo.vivo .u-tempo__cena--virada .u-tempo__ideia, .u-tempo.vivo .u-tempo__cena--virada .u-link { opacity: 0; transform: translateY(20px); transition: opacity .8s var(--ease), transform .9s var(--ease); }
+  .u-tempo.vivo .u-tempo__cena--virada.fim .u-tempo__ideia, .u-tempo.vivo .u-tempo__cena--virada.fim .u-link { opacity: 1; transform: none; }
+  .u-tempo.vivo .u-tempo__ponto { transition: left .25s linear; }
+}
+@media (prefers-reduced-motion: no-preference) and (max-width: 900px) {
+  /* a barra fixa de Ligar e WhatsApp ocupa o pé da tela no celular */
+  .u-tempo.vivo .u-tempo__palco { padding-bottom: 72px; }
+}
+
+@media (max-width: 760px) {
+  .u-tempo__dados { grid-template-columns: minmax(0, 1fr); gap: 14px; margin-top: 26px; }
+  .u-tempo__dados div { gap: 4px; padding-top: 10px; }
+  .u-tempo__dados dd { font-size: 2.25rem; }
+  .u-tempo__dados dt { font-size: .9375rem; }
+  .u-tempo__marcos { height: 62px; font-size: .75rem; }
+  .u-tempo__marcos li { max-width: 12ch; }
+  .u-tempo__marcos b { font-size: 1rem; }
+  .u-tempo__eixo { padding-top: 24px; padding-bottom: 24px; }
+  .u-tempo__ideia { margin-top: 28px; }
+}
+
+/* =====================================================================================
+   Passagens em meio-tom entre as seções (os círculos da marca rareando de uma cor para a outra)
+   ===================================================================================== */
+.u-territorio, .u-metodo, .u-conversa { position: relative; }
+.u-territorio::before, .u-metodo::before, .u-conversa::before, .u-vitrine::after {
+  content: ""; position: absolute; z-index: 0; left: 0; right: 0; top: -1px; height: 196px; pointer-events: none;
+  background-repeat: repeat-x; background-position: center top;
+}
+.u-territorio::before, .u-vitrine::after { background-image: linear-gradient(var(--papel), var(--papel)), url("meio-tom-papel.svg"); background-size: 100% 4px, auto; background-repeat: no-repeat, repeat-x; }
+.u-metodo::before, .u-conversa::before { background-image: linear-gradient(var(--marinho), var(--marinho)), url("meio-tom-marinho.svg"); background-size: 100% 4px, auto; background-repeat: no-repeat, repeat-x; }
+.u-territorio > *, .u-metodo > *, .u-conversa > * { position: relative; z-index: 1; }
+.u-territorio { padding-top: clamp(150px, 14vw, 210px); }
+.u-metodo { padding-top: clamp(170px, 16vw, 240px); }
+.u-conversa { padding-top: clamp(170px, 16vw, 240px); }
+.u-vitrine { padding-top: clamp(170px, 16vw, 240px); }
+@media (max-width: 760px) {
+  .u-territorio::before, .u-metodo::before, .u-conversa::before, .u-vitrine::after { height: 120px; background-size: 100% 4px, 12px auto; }
+}
+
+/* =====================================================================================
+   A seção que sai recua e esmaece; a que entra cresce
+   ===================================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .u-territorio__grade, .u-metodo__grade, .u-frentes, .u-vitrine__grade, .u-vitrine__mais {
+      animation: u-recua linear both; animation-timeline: view(); animation-range: exit 15% exit 100%;
+    }
+  }
+}
+.u-vitrine > .env { position: relative; z-index: 1; }
+@keyframes u-recua { to { opacity: .15; transform: translateY(-28px) scale(.95); } }
+
+/* =====================================================================================
+   Números: o primeiro (os 35 anos) abre a fila, os outros em pares
+   ===================================================================================== */
+.u-numeros .u-numero:first-child { grid-column: 1 / -1; }
+.u-numeros .u-numero:first-child .u-numero__valor { font-size: clamp(4rem, 2.4rem + 5.4vw, 7.5rem); }
