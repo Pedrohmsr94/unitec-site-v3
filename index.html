@@ -16,6 +16,7 @@
 <link rel="preload" as="image" href="assets/img/ab-trecho-01-1600.webp" imagesrcset="assets/img/ab-trecho-01-960.webp 960w, assets/img/ab-trecho-01-1600.webp 1600w, assets/img/ab-trecho-01-2400.webp 2400w" imagesizes="100vw" fetchpriority="high"><link rel="stylesheet" href="assets/css/site.css">
 <link rel="stylesheet" href="assets/css/v3.css">
 <link rel="stylesheet" href="assets/css/v3-paginas.css">
+<link rel="stylesheet" href="assets/css/v3-zap.css">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body class="pg-inicio u-home">
@@ -96,7 +97,7 @@
   <span class="u-faixa__valor tab" data-faixa-temp>22°</span>
   <span class="u-faixa__un" data-faixa-chuva>chuva 94% hoje</span>
 </li>
-<li class="u-faixa__item u-faixa__item--fontes"><span class="u-faixa__fonte">Cepea/Esalq, Banco Central, CBOT com atraso e Open-Meteo · atualizado 25/11, 23h24</span></li></ul>
+<li class="u-faixa__item u-faixa__item--fontes"><span class="u-faixa__fonte">Cepea/Esalq, Banco Central, CBOT com atraso e Open-Meteo · atualizado 25/11, 23h42</span></li></ul>
       <ul class="u-faixa__lista" aria-hidden="true"><li class="u-faixa__item">
   <span class="u-faixa__nome">Soja Paranaguá</span>
   <span class="u-faixa__valor tab" data-faixa-valor>R$ 170,05</span><span class="u-faixa__un">/sc 60 kg</span>  <span class="u-faixa__fonte">Cepea/Esalq, 25/11</span>
@@ -153,7 +154,7 @@
   <span class="u-faixa__valor tab" data-faixa-temp>22°</span>
   <span class="u-faixa__un" data-faixa-chuva>chuva 94% hoje</span>
 </li>
-<li class="u-faixa__item u-faixa__item--fontes"><span class="u-faixa__fonte">Cepea/Esalq, Banco Central, CBOT com atraso e Open-Meteo · atualizado 25/11, 23h24</span></li></ul>
+<li class="u-faixa__item u-faixa__item--fontes"><span class="u-faixa__fonte">Cepea/Esalq, Banco Central, CBOT com atraso e Open-Meteo · atualizado 25/11, 23h42</span></li></ul>
     </div>
   </div>
   <button class="u-faixa__pausa" type="button" data-faixa-pausa aria-pressed="false">
@@ -414,62 +415,80 @@
   </div>
 </section>
 
-<section class="u-news" aria-labelledby="news-titulo">
-  <div class="env">
-    <div class="u-news__cabeca">
-      <h2 class="u-titulo" id="news-titulo">Unitec <b>News</b></h2>
-      <p class="u-lead">O que mudou no campo, no imposto e no mercado, traduzido para a conta da fazenda. Com fonte, data e o que muda na decisão.</p>
-    </div>
-    <div class="u-news__grade">
-      <a class="u-materia u-materia--principal" href="noticias/funrural-stf-nota-de-venda-nao-muda/">
-        <span class="u-materia__meta"><b>A venda</b><span class="tab">21 de outubro de 2026</span></span>
-        <span class="u-materia__titulo">O Funrural foi julgado. Mas a sua nota de venda não muda.</span>
-        <span class="u-materia__resumo">A decisão que esta notícia melhora é o que fazer com o passado. Antes de qualquer tese, saber em que situação a fazenda está no Funrural de 2017 para trás: pagou, parcelou ou discutiu. É levantamento de papel, e se faz agora, sem esperar a…</span>
-        <span class="u-materia__ler">Ler a notícia <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-seta"></use></svg></span>
-      </a>
-      <ul class="u-news__lista">
-        <li><a class="u-materia" href="noticias/custo-da-soja-rio-verde-safra-e-imposto/">
-          <span class="u-materia__meta"><b>A lavoura</b><span class="tab">21/10</span></span>
-          <span class="u-materia__titulo">Soja a 75,5 sacas por hectare de custo em Rio Verde. A safra fecha num ano, e o imposto, em outro.</span>
-        </a></li>
-        <li><a class="u-materia" href="noticias/soja-vendida-agora-entrega-2027-cbs/">
-          <span class="u-materia__meta"><b>O que vem pela frente</b><span class="tab">21/10</span></span>
-          <span class="u-materia__titulo">A soja vendida agora vai ser entregue em 2027. O contrato diz como fica a CBS?</span>
-        </a></li>
-        <li><a class="u-materia" href="noticias/cpr-credito-safra-livro-caixa/">
-          <span class="u-materia__meta"><b>A lavoura</b><span class="tab">13/10</span></span>
-          <span class="u-materia__titulo">46,9% do crédito da agricultura empresarial veio por CPR. O que isso muda no seu livro caixa.</span>
-        </a></li>
+<section class="u-vitrine" data-vitrine aria-labelledby="vitrine-titulo">
+  <canvas class="u-vitrine__fundo" data-vitrine-fundo aria-hidden="true"></canvas>
+  <div class="env u-vitrine__grade">
+    <div class="u-vitrine__texto">
+      <h2 class="u-titulo" id="vitrine-titulo">A informação que move a fazenda, <b>no seu WhatsApp.</b></h2>
+      <p class="u-lead">A Unitec News chega no celular: o que mudou, o que vence e o que isso muda na conta da fazenda. Só a equipe da Unitec envia.</p>
+      <ul class="u-vitrine__itens">
+        <li><span class="u-vitrine__ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 17l5-5 4 3 7-8" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>O mercado do dia</li>
+        <li><span class="u-vitrine__ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M4 10h16M9 3v4M15 3v4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span>O prazo antes de vencer</li>
+        <li><span class="u-vitrine__ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 5h14v14H5z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M8 9h8M8 12.5h8M8 16h5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span>A notícia traduzida para a fazenda</li>
       </ul>
-      <aside class="u-prazos" aria-labelledby="prazos-titulo">
-        <h3 id="prazos-titulo">Próximos prazos</h3>
-        <ol>
-          <li class="u-prazo">
-            <span class="u-prazo__dia tab">30</span>
-            <span class="u-prazo__mes">nov</span>
-            <span class="u-prazo__texto"><b>Declaração de rebanho</b>Quem cria bovinos e bubalinos em Goiás</span>
-          </li>
-          <li class="u-prazo">
-            <span class="u-prazo__dia tab">30</span>
-            <span class="u-prazo__mes">nov</span>
-            <span class="u-prazo__texto"><b>ITR, 3ª quota</b>Quem parcelou o ITR de 2026</span>
-          </li>
-          <li class="u-prazo">
-            <span class="u-prazo__dia tab">30</span>
-            <span class="u-prazo__mes">nov</span>
-            <span class="u-prazo__texto"><b>13º, 1ª parcela</b>Empregador rural</span>
-          </li>
-        </ol>
-        <a class="u-link" href="unitec-news/calendario/">Calendário completo <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-seta"></use></svg></a>
-      </aside>
+      <div class="u-vitrine__acoes">
+        <a class="btn btn--vermelho btn--grande" href="unitec-news/#comunidade"><svg class="ico ico--whats" aria-hidden="true" focusable="false"><use href="#i-whatsapp"></use></svg><span>Quero receber no WhatsApp</span></a>
+        <a class="u-link u-link--claro" href="unitec-news/">Ver a Unitec News <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-seta"></use></svg></a>
+      </div>
     </div>
-    <nav class="u-editorias" aria-label="Editorias da Unitec News">
-      <a href="unitec-news/?editoria=a-terra"><b>A terra</b><span>Matrícula, CAR, CCIR, ITR, compra, venda e sucessão da área</span></a>
-      <a href="unitec-news/?editoria=a-lavoura"><b>A lavoura</b><span>Custo por hectare, livro caixa, custeio e crédito</span></a>
-      <a href="unitec-news/?editoria=a-venda"><b>A venda</b><span>Armazém, nota do produtor, Funrural e imposto de renda</span></a>
-      <a href="unitec-news/?editoria=o-que-vem"><b>O que vem pela frente</b><span>Reforma tributária, CNPJ do produtor em 2027 e a próxima safra</span></a>
-    </nav>
-    <p class="u-news__todas"><a class="btn btn--marinho" href="unitec-news/">Abrir a Unitec News <svg class="ico" aria-hidden="true" focusable="false"><use href="#i-seta"></use></svg></a></p>
+    <div class="u-vitrine__palco" data-palco>
+      <div class="u-cel" data-cel>
+  <div class="u-cel__corpo">
+    <span class="u-cel__ilha" aria-hidden="true"></span>
+    <div class="u-cel__tela">
+      <div class="u-wa">
+        <div class="u-wa__status" aria-hidden="true"><b>07:03</b><span class="u-wa__sinais"><i></i><i></i><i></i><i></i><span class="u-wa__bateria"></span></span></div>
+        <header class="u-wa__topo">
+          <svg class="u-wa__ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="u-wa__avatar"><img src="assets/marca/simbolo-u.png" width="64" height="64" alt=""></span>
+          <span class="u-wa__nome"><b>Unitec News</b><small>Comunidade · avisos da Unitec</small></span>
+          <svg class="u-wa__ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1.8" fill="currentColor"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/><circle cx="12" cy="19" r="1.8" fill="currentColor"/></svg>
+        </header>
+        <div class="u-wa__feed" data-wa-feed>
+          <p class="u-wa__dia"><span>Hoje</span></p>
+          <div class="u-wa__msg" data-wa-msg>
+            <p class="u-wa__titulo">Mercado de hoje</p>
+<p class="u-wa__linha"><span>Soja Paranaguá</span><b class="tab">R$ 170,05</b></p><p class="u-wa__linha"><span>Milho Campinas</span><b class="tab">R$ 67,94</b></p><p class="u-wa__linha"><span>Dólar PTAX</span><b class="tab">R$ 5,8825</b></p>            <p class="u-wa__fonte">Cepea/Esalq e Banco Central</p>
+            <span class="u-wa__hora">07:00</span>
+          </div>
+          <div class="u-wa__msg" data-wa-msg>
+            <p class="u-wa__titulo">Prazo chegando</p>
+            <p><b>Declaração de rebanho</b>: até 30/11.</p>
+            <p>Quem cria bovinos e bubalinos em Goiás</p>
+            <span class="u-wa__hora">07:01</span>
+          </div>
+          <div class="u-wa__msg u-wa__msg--destaque" data-wa-msg>
+            <span class="u-wa__card">
+<img src="assets/img/ab-trecho-06-960.webp" width="480" height="270" alt="" loading="lazy" decoding="async">              <span><b>O Funrural foi julgado. Mas a sua nota de venda não muda.</b><small>Unitec News · A venda</small></span>
+            </span>
+            <p>A decisão que esta notícia melhora é o que fazer com o passado. Antes de qualquer tese, saber em que situação a fazenda…</p>
+            <span class="u-wa__hora">07:02</span>
+          </div>
+          <div class="u-wa__msg" data-wa-msg>
+            <p class="u-wa__titulo">Chuva hoje</p>
+            <p class="tab">Jataí 94% · Rio Verde 75% · Mineiros 88%</p>
+            <span class="u-wa__hora">07:03</span>
+          </div>
+          <div class="u-wa__digitando" data-wa-digitando aria-hidden="true"><i></i><i></i><i></i></div>
+        </div>
+        <footer class="u-wa__rodape">Só a equipe da Unitec envia mensagens</footer>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="u-notif u-notif--1" aria-hidden="true">
+  <span class="u-notif__app"><img src="assets/marca/simbolo-u.png" width="32" height="32" alt=""></span>
+  <span class="u-notif__txt"><b>Unitec News</b><small>Mercado de hoje: Soja Paranaguá R$ 170,05</small></span><em>agora</em>
+</div>
+<div class="u-notif u-notif--2" aria-hidden="true">
+  <span class="u-notif__app"><img src="assets/marca/simbolo-u.png" width="32" height="32" alt=""></span>
+  <span class="u-notif__txt"><b>Unitec News</b><small>Prazo: Declaração de rebanho até 30/11</small></span><em>7 min</em>
+</div>
+<div class="u-notif u-notif--3" aria-hidden="true">
+  <span class="u-notif__app"><img src="assets/marca/simbolo-u.png" width="32" height="32" alt=""></span>
+  <span class="u-notif__txt"><b>Unitec News</b><small>O Funrural foi julgado. Mas a sua nota de venda não muda.</small></span><em>12 min</em>
+</div>
+    </div>
   </div>
 </section>
 

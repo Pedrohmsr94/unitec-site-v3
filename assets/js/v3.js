@@ -222,6 +222,49 @@
     }
   }
 
+  /* ---------------- Unitec News no WhatsApp: as mensagens chegam uma a uma ---------------- */
+  $$('[data-vitrine]').forEach((vitrine) => {
+    const msgs = $$('[data-wa-msg]', vitrine);
+    const digitando = $('[data-wa-digitando]', vitrine);
+    const palco = $('[data-palco]', vitrine);
+    const cel = $('[data-cel]', vitrine);
+    if (!palco || !msgs.length) return;
+    if (reduz || !('IntersectionObserver' in window)) { vitrine.classList.add('vivo'); return; }
+    vitrine.classList.add('anima');
+    let rodando = false, relogio = null, k = 0;
+    function passo() {
+      if (!rodando) return;
+      if (k < msgs.length) {
+        digitando && digitando.classList.add('ativo');
+        relogio = setTimeout(() => {
+          digitando && digitando.classList.remove('ativo');
+          msgs[k].classList.add('chegou');
+          k += 1;
+          relogio = setTimeout(passo, k === msgs.length ? 6500 : 1300);
+        }, 1000);
+      } else {
+        msgs.forEach((m) => m.classList.add('sai'));
+        relogio = setTimeout(() => { msgs.forEach((m) => m.classList.remove('chegou', 'sai')); k = 0; passo(); }, 520);
+      }
+    }
+    new IntersectionObserver((es) => {
+      const ve = es.some((e) => e.isIntersecting);
+      if (ve) {
+        vitrine.classList.add('vivo');
+        if (!rodando) { rodando = true; relogio = setTimeout(passo, 600); }
+      } else if (rodando) { rodando = false; clearTimeout(relogio); }
+    }, { threshold: 0.3 }).observe(palco);
+    // o aparelho acompanha o mouse, de leve
+    if (cel && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      vitrine.addEventListener('pointermove', (e) => {
+        const r = palco.getBoundingClientRect();
+        cel.style.setProperty('--px', `${(((e.clientX - r.left) / r.width) - 0.5) * 16}deg`);
+        cel.style.setProperty('--py', `${-(((e.clientY - r.top) / r.height) - 0.5) * 10}deg`);
+      });
+      vitrine.addEventListener('pointerleave', () => { cel.style.setProperty('--px', '0deg'); cel.style.setProperty('--py', '0deg'); });
+    }
+  });
+
   /* ---------------- three.js sob demanda ---------------- */
   const conexao = navigator.connection || {};
   const temWebGL = (() => { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) { return false; } })();
@@ -258,6 +301,16 @@
     }).catch(() => {});
     if (document.readyState === 'complete') setTimeout(iniciar, 120); else addEventListener('load', () => setTimeout(iniciar, 120));
   }
+
+  $$('[data-vitrine-fundo]').forEach((tela) => {
+    const secao = tela.closest('[data-vitrine]');
+    const io = new IntersectionObserver((es) => {
+      if (!es.some((e) => e.isIntersecting)) return;
+      io.disconnect();
+      modulo('circulos').then((m) => { if (m.iniciar(secao, tela)) secao.classList.add('fundo-vivo'); }).catch(() => {});
+    }, { rootMargin: '400px 0px' });
+    io.observe(secao);
+  });
 
   const mapa = $('[data-mapa]');
   const dadosMapa = $('#dados-mapa');

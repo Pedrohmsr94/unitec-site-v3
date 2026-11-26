@@ -1,0 +1,160 @@
+/* Unitec News no WhatsApp: a vitrine da home e o bloco da comunidade na página da Unitec News.
+   O celular e a tela do WhatsApp usam as cores, a fonte do sistema e as sombras do próprio aparelho e do app:
+   são o objeto representado, não o sistema da marca. O resto da seção segue a marca (marinho, branco, um vermelho). */
+
+@property --giro { syntax: "<angle>"; inherits: true; initial-value: -16deg; }
+
+.u-vitrine { position: relative; overflow: clip; background: var(--marinho); color: rgba(255, 255, 255, .86); padding: var(--secao) 0; isolation: isolate; }
+.u-vitrine__fundo { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; opacity: 0; transition: opacity 1.6s var(--ease); }
+.u-vitrine.fundo-vivo .u-vitrine__fundo { opacity: 1; }
+.u-vitrine::before {
+  content: ""; position: absolute; z-index: -2; right: -8%; top: -10%; width: 62%; height: 120%;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, .11) 1.3px, transparent 1.6px); background-size: 15px 15px;
+  -webkit-mask-image: radial-gradient(closest-side, #000 20%, transparent 100%); mask-image: radial-gradient(closest-side, #000 20%, transparent 100%);
+}
+.u-vitrine__grade { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: 48px clamp(32px, 4vw, 72px); align-items: center; }
+.u-vitrine .u-titulo { color: #fff; font-size: clamp(2.25rem, 1.35rem + 2.5vw, 3.75rem); }
+.u-vitrine .u-lead { color: rgba(255, 255, 255, .86); max-width: 40ch; }
+.u-vitrine__itens { display: grid; gap: 14px; margin-top: 36px; }
+.u-vitrine__itens li { display: flex; align-items: center; gap: 14px; font-size: 1.125rem; font-weight: 700; color: #fff; }
+.u-vitrine__ico {
+  display: grid; place-items: center; flex: none; width: 46px; height: 46px; border-radius: 50%;
+  background: rgba(255, 255, 255, .07); border: 1.5px solid rgba(255, 255, 255, .3); color: #fff;
+}
+.u-vitrine__ico svg { width: 22px; height: 22px; }
+.u-vitrine__acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; margin-top: 42px; }
+.u-vitrine__nota { margin-top: 16px; font-size: .9375rem; color: rgba(255, 255, 255, .72); }
+.u-vitrine :focus-visible { outline-color: #fff; }
+
+/* ---------- o palco: celular em 3D e as notificações em volta ---------- */
+.u-vitrine__palco { position: relative; display: grid; place-items: center; min-height: 720px; perspective: 1700px; }
+.u-cel {
+  --px: 0deg; --py: 0deg;
+  position: relative; width: 306px; aspect-ratio: 306 / 640; transform-style: preserve-3d;
+  transform: rotateY(calc(var(--giro) + var(--px))) rotateX(calc(4deg + var(--py))) rotateZ(1.2deg);
+  transition: --px .6s var(--ease), --py .6s var(--ease);
+}
+.u-cel__corpo {
+  position: absolute; inset: 0; padding: 11px; border-radius: 50px; background: linear-gradient(145deg, #2a2b30, #0c0c0e 45%, #1c1d21);
+  box-shadow: inset 0 0 0 1.5px #3a3b40, inset 0 0 0 5px #08080a, 0 50px 90px -34px rgba(0, 0, 0, .75), 0 22px 40px -22px rgba(0, 0, 0, .6);
+}
+.u-cel__corpo::before, .u-cel__corpo::after { content: ""; position: absolute; width: 3px; border-radius: 2px; background: #26272b; }
+.u-cel__corpo::before { left: -3px; top: 120px; height: 56px; box-shadow: 0 74px 0 #26272b; }
+.u-cel__corpo::after { right: -3px; top: 160px; height: 84px; }
+.u-cel__ilha { position: absolute; z-index: 4; top: 20px; left: 50%; width: 96px; height: 27px; margin-left: -48px; border-radius: 20px; background: #000; }
+.u-cel__tela { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 40px; background: #EFEAE2; }
+
+/* ---------- a tela do WhatsApp (cores e fonte do app) ---------- */
+.u-wa {
+  display: flex; flex-direction: column; height: 100%;
+  font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #111B21; letter-spacing: 0; -webkit-font-smoothing: antialiased;
+}
+.u-wa__status { display: flex; align-items: flex-end; justify-content: space-between; height: 46px; padding: 0 28px 4px 30px; background: #008069; color: #fff; font-size: 13px; }
+.u-wa__sinais { display: flex; align-items: flex-end; gap: 2px; }
+.u-wa__sinais i { width: 3px; background: #fff; border-radius: 1px; }
+.u-wa__sinais i:nth-child(1) { height: 4px; } .u-wa__sinais i:nth-child(2) { height: 6px; } .u-wa__sinais i:nth-child(3) { height: 8px; } .u-wa__sinais i:nth-child(4) { height: 10px; }
+.u-wa__bateria { width: 20px; height: 10px; margin-left: 6px; border: 1.5px solid #fff; border-radius: 3px; background: linear-gradient(90deg, #fff 70%, transparent 70%); }
+.u-wa__topo { display: flex; align-items: center; gap: 8px; padding: 6px 10px 10px 6px; background: #008069; color: #fff; }
+.u-wa__ico { width: 22px; height: 22px; flex: none; }
+.u-wa__avatar { display: grid; place-items: center; flex: none; width: 38px; height: 38px; overflow: hidden; border-radius: 50%; background: #fff; }
+.u-wa__avatar img { width: 26px; height: auto; }
+.u-wa__nome { display: flex; flex: 1; flex-direction: column; min-width: 0; line-height: 1.2; }
+.u-wa__nome b { font-size: 15.5px; font-weight: 600; }
+.u-wa__nome small { font-size: 12px; opacity: .85; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.u-wa__feed {
+  display: flex; flex: 1; flex-direction: column; justify-content: flex-end; gap: 7px; overflow: hidden; padding: 10px 12px 14px 14px;
+  background-color: #EFEAE2;
+  background-image:
+    radial-gradient(circle at 30% 30%, rgba(84, 101, 111, .07) 0 2px, transparent 2.5px),
+    radial-gradient(circle at 70% 80%, rgba(84, 101, 111, .06) 0 3px, transparent 3.5px),
+    radial-gradient(circle at 80% 20%, rgba(84, 101, 111, .05) 0 1.5px, transparent 2px);
+  background-size: 38px 38px, 52px 52px, 27px 27px;
+}
+.u-wa__dia { align-self: center; margin: 2px 0 4px; }
+.u-wa__dia span { display: inline-block; padding: 4px 11px; border-radius: 8px; background: #fff; color: #54656F; font-size: 11.5px; box-shadow: 0 1px .5px rgba(11, 20, 26, .13); }
+.u-wa__msg {
+  position: relative; align-self: flex-start; max-width: 93%; padding: 6px 9px 19px; border-radius: 0 9px 9px 9px;
+  background: #fff; color: #111B21; font-size: 13.4px; line-height: 1.38; box-shadow: 0 1px .5px rgba(11, 20, 26, .13);
+}
+.u-wa__msg::before { content: ""; position: absolute; top: 0; left: -7px; border-style: solid; border-width: 0 8px 9px 0; border-color: transparent #fff transparent transparent; }
+.u-wa__msg p + p { margin-top: 2px; }
+.u-wa__titulo { font-weight: 700; }
+.u-wa__linha { display: flex; justify-content: space-between; gap: 14px; }
+.u-wa__linha b { font-weight: 700; }
+.u-wa__fonte { margin-top: 3px !important; color: #667781; font-size: 11.5px; font-style: italic; }
+.u-wa__hora { position: absolute; right: 9px; bottom: 4px; color: #667781; font-size: 11px; }
+.u-wa__card { display: block; margin: -2px -5px 6px; overflow: hidden; border-radius: 7px; background: #F0F2F5; }
+.u-wa__card img { display: block; width: 100%; height: 112px; object-fit: cover; }
+.u-wa__card span { display: flex; flex-direction: column; gap: 2px; padding: 8px 10px 9px; border-left: 4px solid #25D366; }
+.u-wa__card b { font-size: 13px; font-weight: 700; line-height: 1.3; }
+.u-wa__card small { color: #667781; font-size: 11.5px; }
+.u-wa__msg--destaque::after {
+  content: ""; position: absolute; inset: -7px; border: 2px solid var(--vermelho); border-radius: 14px; opacity: 0; pointer-events: none;
+}
+.u-wa__digitando { display: none; align-self: flex-start; gap: 4px; padding: 11px 13px; border-radius: 0 9px 9px 9px; background: #fff; box-shadow: 0 1px .5px rgba(11, 20, 26, .13); }
+.u-wa__digitando i { width: 7px; height: 7px; border-radius: 50%; background: #8696A0; }
+.u-wa__rodape { padding: 10px 14px 20px; background: #F0F2F5; color: #667781; font-size: 12px; text-align: center; }
+
+/* ---------- notificações flutuando em volta do aparelho ---------- */
+.u-notif {
+  position: absolute; z-index: 5; display: flex; align-items: center; gap: 11px; width: 276px; padding: 11px 13px; border-radius: 20px;
+  background: rgba(255, 255, 255, .95); color: #111; box-shadow: 0 22px 44px -18px rgba(0, 0, 0, .55), 0 2px 6px rgba(0, 0, 0, .12);
+  font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.u-notif__app { display: grid; place-items: center; flex: none; width: 34px; height: 34px; border-radius: 9px; background: #fff; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .08); }
+.u-notif__app img { width: 24px; height: auto; }
+.u-notif__txt { display: flex; flex: 1; flex-direction: column; min-width: 0; line-height: 1.3; }
+.u-notif__txt b { font-size: 13px; font-weight: 600; }
+.u-notif__txt small { display: -webkit-box; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font-size: 12.5px; color: #3b3b3b; }
+.u-notif em { align-self: flex-start; font-size: 11px; font-style: normal; color: #8a8a8a; }
+.u-notif--1 { top: 7%; left: 0; }
+.u-notif--2 { top: 44%; right: -2%; }
+.u-notif--3 { bottom: 8%; left: 4%; }
+
+/* ---------- movimento: tudo parte do estado visível; o JS liga a chegada das mensagens ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .u-vitrine__palco .u-cel { animation: u-cel-gira linear both; animation-timeline: view(); animation-range: entry 0% cover 60%; }
+  }
+  .js .u-vitrine.anima [data-wa-msg]:not(.chegou) { display: none; }
+  .js .u-vitrine.anima [data-wa-msg].chegou { animation: u-wa-chega .5s cubic-bezier(.2, 1.3, .4, 1) both; transform-origin: 0 0; }
+  .js .u-vitrine.anima [data-wa-msg].sai { animation: u-wa-sai .5s var(--ease) both; }
+  .u-wa__digitando.ativo { display: flex; animation: u-wa-chega .3s var(--ease) both; }
+  .u-wa__digitando i { animation: u-wa-pontos 1.1s ease-in-out infinite; }
+  .u-wa__digitando i:nth-child(2) { animation-delay: .15s; }
+  .u-wa__digitando i:nth-child(3) { animation-delay: .3s; }
+  .js .u-vitrine.anima .u-wa__msg--destaque.chegou::after { animation: u-wa-pulso 2.6s ease-out .4s 3; }
+  .js .u-vitrine.anima .u-notif { opacity: 0; transform: translateY(26px) scale(.92); }
+  .js .u-vitrine.anima.vivo .u-notif { opacity: 1; transform: none; transition: opacity .7s var(--ease), transform .9s cubic-bezier(.2, 1.25, .4, 1); }
+  .js .u-vitrine.anima.vivo .u-notif--1 { transition-delay: .5s; animation: u-flutua 6.5s ease-in-out 1.6s infinite alternate; }
+  .js .u-vitrine.anima.vivo .u-notif--2 { transition-delay: 1.6s; animation: u-flutua 7.5s ease-in-out 2.6s infinite alternate-reverse; }
+  .js .u-vitrine.anima.vivo .u-notif--3 { transition-delay: 2.7s; animation: u-flutua 7s ease-in-out 3.6s infinite alternate; }
+}
+@keyframes u-cel-gira { from { --giro: -36deg; } to { --giro: -12deg; } }
+@keyframes u-wa-chega { from { opacity: 0; transform: translateY(14px) scale(.94); } to { opacity: 1; transform: none; } }
+@keyframes u-wa-sai { to { opacity: 0; transform: translateY(-10px); } }
+@keyframes u-wa-pontos { 0%, 60%, 100% { transform: none; opacity: .5; } 30% { transform: translateY(-4px); opacity: 1; } }
+@keyframes u-wa-pulso { 0% { opacity: .95; transform: scale(.98); } 70% { opacity: 0; transform: scale(1.04); } 100% { opacity: 0; } }
+@keyframes u-flutua { from { translate: 0 0; } to { translate: 0 -12px; } }
+
+/* ---------- celular de verdade ---------- */
+@media (max-width: 999px) {
+  /* no celular, o aparelho vem logo depois do título: é ali que a pessoa se vê recebendo a mensagem */
+  .u-vitrine__grade { grid-template-columns: minmax(0, 1fr); row-gap: 0; }
+  .u-vitrine__texto { display: contents; }
+  .u-vitrine__texto .u-titulo { order: 1; }
+  .u-vitrine__texto .u-lead { order: 2; }
+  .u-vitrine__palco { order: 3; min-height: 660px; margin-top: 12px; }
+  .u-vitrine__itens { order: 4; margin-top: 8px; }
+  .u-vitrine__acoes { order: 5; }
+  .u-vitrine__nota { order: 6; }
+}
+@media (max-width: 760px) {
+  .u-vitrine__palco { min-height: 600px; perspective: 1200px; }
+  .u-cel { width: 262px; }
+  .u-notif { width: 230px; padding: 9px 11px; border-radius: 17px; }
+  .u-notif--1 { top: 1%; left: -2%; }
+  .u-notif--2, .u-notif--3 { display: none; }
+  .u-vitrine__acoes .btn { width: 100%; }
+}

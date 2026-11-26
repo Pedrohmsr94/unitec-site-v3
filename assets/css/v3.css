@@ -496,7 +496,7 @@ body { background: var(--papel); }
     .u-territorio .u-titulo, .u-territorio .u-lead, .u-numero, .u-territorio__nota,
     .u-metodo__intro > *, .u-etapas, .u-pivo, .u-frentes__titulo, .u-frentes__lista li,
     .u-news__cabeca > *, .u-materia, .u-prazos, .u-editorias a, .u-news__todas,
-    .u-conversa__texto > *, .u-form, .u-guias__cabeca > *, .u-guias__lista li, .u-lista-news li {
+    .u-conversa__texto > *, .u-form, .u-guias__cabeca > *, .u-guias__lista li, .u-lista-news li, .u-vitrine__texto > * {
       animation: u-revela linear both; animation-timeline: view(); animation-range: entry 0% cover 26%;
     }
   }
